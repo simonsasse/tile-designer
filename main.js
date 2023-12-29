@@ -1,5 +1,29 @@
 let color = "#000000";
 
+// Function that exports the tiles as a png image
+function exportTiles() {
+    // Get the container element where the tiles are
+    const container = document.getElementById("container");
+
+    // Create a new image element
+    const image = new Image();
+
+    // Set the image source to the container element
+    image.src = container.toDataURL("image/png");
+
+    // Create a new anchor element
+    const anchor = document.createElement("a");
+
+    // Set the anchor href to the image source
+    anchor.href = image.src;
+
+    // Set the anchor download to "tiles.png"
+    anchor.download = "tiles.png";
+
+    // Click the anchor element
+    anchor.click();
+}
+
 // function to change local color
 function changeColor() {
     // log
@@ -41,9 +65,18 @@ function tileClickHandler() {
     );
     this.querySelectorAll(".bottom").forEach((element) => {
         element.style.borderTopColor = color;
+    });
+
+    tile.querySelectorAll(".middleRotated").forEach((element) => {
+        element.style.background = color;
+    });
+    tile.querySelectorAll(".left").forEach((element) => {
+        element.style.borderRightColor = color;
     }
     );
-
+    tile.querySelectorAll(".right").forEach((element) => {
+        element.style.borderLeftColor = color;
+    });
 
 }
 
@@ -52,26 +85,50 @@ function setTileColor(tile, color) {
     // log tile
     console.log(tile);
     console.log("setTileColor: " + color);
-    tile.querySelectorAll(".middle").forEach((element) => {
-        element.style.background = color;
-    });
-    tile.querySelectorAll(".top").forEach((element) => {
-        element.style.borderBottomColor = color;
+    if (tile.classList.contains("hex-rot")) {
+        tile.querySelectorAll(".middleRotated").forEach((element) => {
+            element.style.background = color;
+        });
+        tile.querySelectorAll(".left").forEach((element) => {
+            element.style.borderRightColor = color;
+        }
+        );
+        tile.querySelectorAll(".right").forEach((element) => {
+            element.style.borderLeftColor = color;
+        }
+        );
+        return;
     }
-    );
-    tile.querySelectorAll(".bottom").forEach((element) => {
-        element.style.borderTopColor = color;
+    else {
+        tile.querySelectorAll(".middle").forEach((element) => {
+            element.style.background = color;
+        });
+        tile.querySelectorAll(".top").forEach((element) => {
+            element.style.borderBottomColor = color;
+        }
+        );
+        tile.querySelectorAll(".bottom").forEach((element) => {
+            element.style.borderTopColor = color;
+        }
+        );
     }
-    );
 }
-
-function generateTiles() {
+// function to generate tiles 
+// optional parameter: array of colors to set color of each tile
+function generateTiles(colors = [], rotate = false) {
     // Get the container element where the tiles will be appended
     const container = document.getElementById("container");
 
     // Clear the container element
     container.innerHTML = "";
 
+    // if colors is empty
+    // make all tiles grey
+    if (colors.length == 0) {
+        colors = ["#808080"];
+    }
+
+    tileCount = 0;
     // Create an endless tiling of the .hex class
     for (let i = 0; i < 10; i++) {
         // Create a row element with the .hex and .row classes
@@ -82,7 +139,7 @@ function generateTiles() {
         const isEvenRow = i % 2 === 0;
 
         // Add the "even" keyword to every second row
-        if (isEvenRow) {
+        if (isEvenRow && !rotate) {
             row.classList.add("even");
         }
 
@@ -90,26 +147,58 @@ function generateTiles() {
 
 
         for (let j = 0; j < 30; j++) {
+            tileColor = colors[tileCount % colors.length];
             const hex = document.createElement("div");
-            hex.classList.add("hex");
+            if (rotate) {
+                if (j % 2 == 0) {
+                    hex.classList.add("hex-rot");
+                    hex.classList.add("even");
+                } else {
+                    hex.classList.add("hex-rot");
+                }
+            } else {
+                hex.classList.add("hex");
+            }
 
-            // Create the top, middle, and bottom elements for the hex element
-            const top = document.createElement("div");
-            top.classList.add("top");
-            const middle = document.createElement("div");
-            middle.classList.add("middle");
-            const bottom = document.createElement("div");
-            bottom.classList.add("bottom");
+            if (rotate) {
+                const left = document.createElement("div");
+                left.classList.add("left");
+                left.style.borderRightColor = tileColor;
+                const right = document.createElement("div");
+                right.classList.add("right");
+                right.style.borderLeftColor = tileColor;
+                const middle = document.createElement("div");
+                middle.classList.add("middleRotated");
+                middle.style.background = tileColor;
+                hex.appendChild(left);
+                hex.appendChild(middle);
+                hex.appendChild(right);
 
-            // Append the top, middle, and bottom elements to the hex element
-            hex.appendChild(top);
-            hex.appendChild(middle);
-            hex.appendChild(bottom);
+            } else {
+                // Create the top, middle, and bottom elements for the hex element
+                const top = document.createElement("div");
+                top.classList.add("top");
+                top.style.borderBottomColor = tileColor;
+                const middle = document.createElement("div");
+                middle.classList.add("middle");
+                middle.style.background = tileColor;
+                const bottom = document.createElement("div");
+                bottom.classList.add("bottom");
+                bottom.style.borderTopColor = tileColor;
+
+                // Append the top, middle, and bottom elements to the hex element
+                hex.appendChild(top);
+                hex.appendChild(middle);
+                hex.appendChild(bottom);
+            }
+
             // Add a click event listener to each tile
             hex.addEventListener("click", tileClickHandler);
 
             // Append the hex element to the row element
             row.appendChild(hex);
+
+            tileCount++;
             //break if window width is reached
             if (window.innerWidth <= (j + 1) * 170) {
                 break;
@@ -119,35 +208,30 @@ function generateTiles() {
 
         // Add the row element to the container
         container.appendChild(row);
-
-
     }
 }
 
 // rotate tiles on click
 function rotateTiles() {
-    // log
-    console.log("rotateTiles");
-    // Apply second orientation margins
-    const tiles = document.querySelectorAll('.hex');
-    tiles.forEach((tile, index) => {
-        const isEvenColumn = index % 2 === 0;
-        if (tile.style.marginRight == '-26px') {
-            tile.style.marginRight = '0px';
-            tile.style.marginLeft = '3px';
-        }
-        else {
-            tile.style.marginLeft = '0px';
-            tile.style.marginRight = '-26px';
-        }
-        if (tile.style.marginBottom == '-50px') {
-            tile.style.marginBottom = '-26px';
-        }
-        else {
-            tile.style.marginBottom = '-50px';
-        }
-    });
+    // check if rotated 
+    let rotated = false;
+    if (document.querySelectorAll(".hex-rot").length > 0) {
+        rotated = true;
+    }
+    // get all colors of tiles
+    let colors = [];
+    if (rotated) {
+        // remove all tiles
+        document.querySelectorAll(".middleRotated").forEach((element) => {
+            colors.push(element.style.background);
+        });
+    } else {
+        document.querySelectorAll(".middle").forEach((element) => {
+            colors.push(element.style.background);
+        });
+    }
 
-
-
+    // log colors
+    console.log(colors);
+    generateTiles(colors, !rotated);
 }

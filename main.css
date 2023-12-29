@@ -59,7 +59,17 @@
     margin-left: 53px;
 }
 
-.hex .left {
+.hex-rot {
+    float: left;
+    margin-right: -26px;
+    margin-bottom: -50px;
+}
+
+.hex-rot.even {
+    margin-top: 53px;
+}
+
+.hex-rot .left {
     float: left;
     width: 0;
     border-right: 30px solid #6C6;
@@ -67,14 +77,14 @@
     border-bottom: 52px solid transparent;
 }
 
-.hex .middleRotated {
+.hex-rot .middleRotated {
     float: left;
     width: 60px;
     height: 104px;
     background: #6C6;
 }
 
-.hex .right {
+.hex-rot .right {
     float: left;
     width: 0;
     border-left: 30px solid #6C6;
@@ -83,9 +93,7 @@
 }
 
 
-.hex.even {
-    margin-top: 53px;
-}
+
 
 #colorDialogID {
     /* position always where cursor the is */
