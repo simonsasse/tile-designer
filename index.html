@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="main.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <input type="color" id="colorDialogID">
+    <!-- add a switch to rotate tiles with lable "rotate tiles" -->
+    <label for="rotateTilesID">Rotate Tiles</label>
+    <input type="checkbox" id="rotateTilesID" onchange="rotateTiles()" checked>
+    <!-- <input type="button" id="setColorButtonID" value="Edit Color"> -->
+    <div id="container" style="float: left; width: 100vw;">
+    </div>
+
+    <script>
+        // Trigger main.js to generate the tiles
+        generateTiles();
+    </script>
+</body>
+
+</html>

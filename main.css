@@ -1,0 +1,97 @@
+/* #container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    margin: 20px auto;
+}
+
+#container div {
+    position: relative;
+    margin: -10px 0;
+    width: 100px;
+    height: 100px;
+    background-color: #cccccc;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+#container div:nth-child(odd) {
+    margin-left: 50px;
+} */
+
+#color-picker {
+    display: block;
+    margin: 20px auto;
+}
+
+/* if js variable rotated is true  */
+
+.hex {
+    float: left;
+    margin-left: 3px;
+    margin-bottom: -26px;
+}
+
+.hex .top {
+    width: 0;
+    border-bottom: 30px solid #6C6;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+}
+
+.hex .middle {
+    width: 104px;
+    height: 60px;
+    background: #6C6;
+}
+
+.hex .bottom {
+    width: 0;
+    border-top: 30px solid #6C6;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+}
+
+.hex-row {
+    clear: left;
+}
+
+.hex-row.even {
+    margin-left: 53px;
+}
+
+.hex .left {
+    float: left;
+    width: 0;
+    border-right: 30px solid #6C6;
+    border-top: 52px solid transparent;
+    border-bottom: 52px solid transparent;
+}
+
+.hex .middleRotated {
+    float: left;
+    width: 60px;
+    height: 104px;
+    background: #6C6;
+}
+
+.hex .right {
+    float: left;
+    width: 0;
+    border-left: 30px solid #6C6;
+    border-top: 52px solid transparent;
+    border-bottom: 52px solid transparent;
+}
+
+
+.hex.even {
+    margin-top: 53px;
+}
+
+#colorDialogID {
+    /* position always where cursor the is */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* hide the dialog */
+    visibility: hidden;
+}
