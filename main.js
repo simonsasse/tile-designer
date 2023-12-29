@@ -1,4 +1,6 @@
 let color = "#000000";
+let colorPickerMode = false;
+let rotated = true;
 
 // Function that exports the tiles as a png image
 function exportTiles() {
@@ -24,10 +26,11 @@ function exportTiles() {
     anchor.click();
 }
 
+
 // function to change local color
-function changeColor() {
+function pickNewColorFromColorPicker() {
     // log
-    console.log("changeColor");
+    console.log("pickNewColorFromColorPicker");
     document.getElementById("colorDialogID").onchange = function () {
         color = document.getElementById("colorDialogID").value;
 
@@ -41,8 +44,35 @@ function changeColor() {
     color = document.getElementById("colorCircleID").style.background;
 }
 
+// set new selected color
+function changeColor(newColor) {
+    // log
+    console.log("changeColor: " + newColor);
+    color = newColor;
+    // turn color of colorCircleID to the color of the clicked tile
+    document.getElementById("colorCircleID").style.background = color;
+}
+
+
+// turn on color picker mode
+function colorPicker() {
+    colorPickerMode = true;
+    // change cursor 
+    document.body.style.cursor = "crosshair";
+}
 // Create a click callback function for the tiles
 function tileClickHandler() {
+    if (colorPickerMode) {
+        // set color of the clicked tile
+        if (rotated)
+            changeColor(this.querySelectorAll(".middle")[0].style.background);
+        else
+            changeColor(this.querySelectorAll(".middleRotated")[0].style.background);
+        colorPickerMode = false;
+        // change cursor
+        document.body.style.cursor = "default";
+        return;
+    }
     // set color of all children of the clicked tile
     // this refers to the clicked tile
     this.querySelectorAll(".middle").forEach((element) => {
@@ -203,10 +233,7 @@ function generateTiles(colors = [], rotate = false) {
 // rotate tiles on click
 function rotateTiles() {
     // check if rotated 
-    let rotated = false;
-    if (document.querySelectorAll(".hex-rot").length > 0) {
-        rotated = true;
-    }
+    rotated = !rotated;
     // get all colors of tiles
     let colors = [];
     if (rotated) {

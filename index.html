@@ -6,19 +6,31 @@
 </head>
 
 <body>
-    <input type="color" id="colorDialogID">
-    <!-- circle that shows current color selection with on click function -->
+    <!-- title -->
+    <h1>Tile Designer
+    </h1>
+    <!-- subtitle -->
+    <!-- add menu bar -->
+    <div class="topnav">
+        <input type="color" id="colorDialogID">
+        <!-- circle that shows current color selection with on click function -->
 
-    <div id="colorCircleID"
-        style="width: 50px; height: 50px; border-radius: 50%; background-color: #000000; float: left;"
-        onclick="changeColor()"></div>
-    <!-- add a switch to rotate tiles with lable "rotate tiles" -->
-    <label for="rotateTilesID">Rotate Tiles</label>
-    <input type="checkbox" id="rotateTilesID" onchange="rotateTiles()" checked>
-    <!-- add a download button  -->
-    <input type="button" id="downloadButtonID" value="Download" onclick="exportTiles()">
+        <div id="colorCircleID"
+            style="width: 50px; height: 50px; border-radius: 50%; background-color: #000000; float: left;"
+            onclick="pickNewColorFromColorPicker()"></div>
+        click to choose color.
+        <!-- vertical line  -->
+        <div style="width: 3px; height: 50px; background-color: #000000; float: left;"></div>
+        <!-- add button to pick color from a tile -->
+        <button onclick="colorPicker()" id="pickColorButton">Pick Color from Tile</button>
+        <!-- vertical line  -->
+        <div style="width: 3px; height: 50px; background-color: #000000; float: left;"></div>
+        <!-- add a switch to rotate tiles with lable "rotate tiles" -->
+        <button id="rotateTilesID" onclick="rotateTiles()">Rotate Tiles</button>
+        <!-- add a download button  -->
+    </div>
     <!-- <input type="button" id="setColorButtonID" value="Edit Color"> -->
-    <div id="container" style="float: left; width: 100vw;">
+    <div id="container">
     </div>
 
     <script>
