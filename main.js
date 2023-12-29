@@ -43,17 +43,6 @@ function changeColor() {
 
 // Create a click callback function for the tiles
 function tileClickHandler() {
-    let tile = this;
-    document.getElementById("colorDialogID").onchange = function () {
-        color = document.getElementById("colorDialogID").value;
-        setTileColor(tile, color);
-        // turn color of colorCircleID to the color of the clicked tile
-        document.getElementById("colorCircleID").style.background = color;
-    };
-    document.getElementById("colorDialogID").focus();
-
-    document.getElementById("colorDialogID").click();
-
     // set color of all children of the clicked tile
     // this refers to the clicked tile
     this.querySelectorAll(".middle").forEach((element) => {
@@ -67,14 +56,14 @@ function tileClickHandler() {
         element.style.borderTopColor = color;
     });
 
-    tile.querySelectorAll(".middleRotated").forEach((element) => {
+    this.querySelectorAll(".middleRotated").forEach((element) => {
         element.style.background = color;
     });
-    tile.querySelectorAll(".left").forEach((element) => {
+    this.querySelectorAll(".left").forEach((element) => {
         element.style.borderRightColor = color;
     }
     );
-    tile.querySelectorAll(".right").forEach((element) => {
+    this.querySelectorAll(".right").forEach((element) => {
         element.style.borderLeftColor = color;
     });
 
