@@ -1,6 +1,7 @@
 let color = "#000000";
 let colorPickerMode = false;
 let rotated = true;
+let backgroundColor = "#ffffff";
 
 // Function that exports the tiles as a png image
 function exportTiles() {
@@ -51,6 +52,25 @@ function changeColor(newColor) {
     color = newColor;
     // turn color of colorCircleID to the color of the clicked tile
     document.getElementById("colorCircleID").style.background = color;
+}
+
+// call color picker and safe selected color
+function changeBackgroundColor() {
+    document.getElementById("colorDialogID").onchange = function () {
+        backgroundColor = document.getElementById("colorDialogID").value;
+        // change background color
+        changeBackgroundColorCallback(backgroundColor);
+    };
+    document.getElementById("colorDialogID").focus();
+
+    document.getElementById("colorDialogID").click();
+}
+
+// function to change html background color
+function changeBackgroundColorCallback(newColor) {
+    // log
+    console.log("changeBackgroundColor: " + newColor);
+    document.body.style.background = newColor;
 }
 
 
