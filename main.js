@@ -1,28 +1,50 @@
+let color = "#000000";
+
+// function to change local color
+function changeColor() {
+    // log
+    console.log("changeColor");
+    document.getElementById("colorDialogID").onchange = function () {
+        color = document.getElementById("colorDialogID").value;
+
+        // turn color of colorCircleID to the color of the clicked tile
+        document.getElementById("colorCircleID").style.background = color;
+    };
+    document.getElementById("colorDialogID").focus();
+
+    document.getElementById("colorDialogID").click();
+    // get color from colorCircleID
+    color = document.getElementById("colorCircleID").style.background;
+}
+
 // Create a click callback function for the tiles
 function tileClickHandler() {
     let tile = this;
-    let color = "#000000"; //Set the default color
     document.getElementById("colorDialogID").onchange = function () {
-        setTileColor(tile, document.getElementById("colorDialogID").value);
+        color = document.getElementById("colorDialogID").value;
+        setTileColor(tile, color);
+        // turn color of colorCircleID to the color of the clicked tile
+        document.getElementById("colorCircleID").style.background = color;
     };
     document.getElementById("colorDialogID").focus();
-    document.getElementById("colorDialogID").value = "#FFCC00"; //Set the default color  NOTE: Remove the line to get the default of #000000
 
     document.getElementById("colorDialogID").click();
 
     // set color of all children of the clicked tile
     // this refers to the clicked tile
     this.querySelectorAll(".middle").forEach((element) => {
-        element.style.background = document.getElementById("colorDialogID").value;
+        element.style.background = color;
     });
     this.querySelectorAll(".top").forEach((element) => {
-        element.style.borderBottomColor = document.getElementById("colorDialogID").value;
+        element.style.borderBottomColor = color;
     }
     );
     this.querySelectorAll(".bottom").forEach((element) => {
-        element.style.borderTopColor = document.getElementById("colorDialogID").value;
+        element.style.borderTopColor = color;
     }
     );
+
+
 }
 
 // set color of a tile 

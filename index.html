@@ -7,6 +7,11 @@
 
 <body>
     <input type="color" id="colorDialogID">
+    <!-- circle that shows current color selection with on click function -->
+
+    <div id="colorCircleID"
+        style="width: 50px; height: 50px; border-radius: 50%; background-color: #000000; float: left;"
+        onclick="changeColor()"></div>
     <!-- add a switch to rotate tiles with lable "rotate tiles" -->
     <label for="rotateTilesID">Rotate Tiles</label>
     <input type="checkbox" id="rotateTilesID" onchange="rotateTiles()" checked>
